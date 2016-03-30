@@ -16,7 +16,7 @@ function getActivityList(registrationId){
         debugger; 
       
        // alert(JSON.stringify(data));
-        var db = window.sqlitePlugin.openDatabase({name: "pcn.db"});
+        var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
         
         db.transaction(function(tx1) {
           tx.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
