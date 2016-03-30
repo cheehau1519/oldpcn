@@ -14,22 +14,23 @@ function getActivityList(registrationId){
       timeout: apiTimeOut,  
       success: function(data, status, xhr) {
         debugger; 
-      
+        
+        datacount=data.length;
+
+        $('#progressbar').attr('max',datacount);
+        
        // alert(JSON.stringify(data));
         var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
         
         db.transaction(function(tx1) {
-          tx.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
+          tx1.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
         })
+        
         deleteData();
-        datacount=data.length;
-
-          $('#progressbar').attr('max',datacount);
-          
-
+        
         for(x=0;x<data.length;x++){
-        storeData(data[x].item_group, data[x].item_code, data[x].type, data[x].desc, data[x].desc2, data[x].UOM, data[x].PRICE1, data[x].PRICE2,data[x].PRICE_MIN, data[x].BALANCEQTY,data[x].last_price,data[x].SyncDate);
-      }
+            storeData(data[x].item_group, data[x].item_code, data[x].type, data[x].desc, data[x].desc2, data[x].UOM, data[x].PRICE1, data[x].PRICE2,data[x].PRICE_MIN, data[x].BALANCEQTY,data[x].last_price,data[x].SyncDate);
+        }
          
        
       },
@@ -51,8 +52,6 @@ function deleteData(data){
             txx.executeSql('DELETE FROM DATA');
             OnsuccessDelete,
             OnerrorDelete
-       
-        
         });
     
 }

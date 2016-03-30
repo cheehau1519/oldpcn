@@ -278,9 +278,9 @@ function syncOnClick(){
                     }
                     else {
                         
-                    loading.startLoading();
-                    getActivityList(); 
-                        
+                        loading.startLoading();
+                        getActivityList(); 
+
                     }
 
                     
