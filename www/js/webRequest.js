@@ -16,7 +16,12 @@ function getActivityList(registrationId){
         debugger; 
       
        // alert(JSON.stringify(data));
-        deleteData(data);
+        var db = window.sqlitePlugin.openDatabase({name: "pcn.db"});
+        
+        db.transaction(function(tx1) {
+          tx.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
+        })
+        deleteData();
         datacount=data.length;
 
           $('#progressbar').attr('max',datacount);
@@ -39,7 +44,8 @@ function getActivityList(registrationId){
 
 function deleteData(data){
 //sqlitePlugin
-    var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
+    //var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
+    
     db.transaction(function(txx) {
             //txx.executeSql('DROP TABLE IF EXISTS DATA');
             txx.executeSql('DELETE FROM DATA');
@@ -53,7 +59,7 @@ function deleteData(data){
 
 function storeData(item_group, item_code, type, desc, desc2, UOM, PRICE1, PRICE2,PRICE_MIN, BALANCEQTY, last_price, SyncDate) {
 
-    var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
+    //var db = window.sqlitePlugin.openDatabase("Database", "1.0", "MANUFACTURE", 200000);
     var data = {
     values1 : [item_group, item_code, type, desc, desc2, UOM, PRICE1, PRICE2,PRICE_MIN, BALANCEQTY, last_price, SyncDate]
     };
@@ -67,7 +73,7 @@ function storeData(item_group, item_code, type, desc, desc2, UOM, PRICE1, PRICE2
   
         db.transaction(function(tx) {
             //tx.executeSql('DROP TABLE IF EXISTS DATA');
-            tx.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
+            //tx.executeSql('create table if not exists DATA(item_group TEXT, item_code TEXT, type TEXT, desc TEXT, desc2 TEXT, UOM TEXT, PRICE1 TEXT, PRICE2 TEXT,PRICE_MIN TEXT, BALANCEQTY TEXT, last_price TEXT, SyncDate TEXT)');
             //tx.executeSql('DELETE FROM DATA');
             tx.executeSql(
                 'INSERT INTO DATA(item_group, item_code, type, desc, desc2, UOM, PRICE1, PRICE2,PRICE_MIN, BALANCEQTY, last_price, SyncDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
