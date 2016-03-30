@@ -263,30 +263,26 @@ function syncOnClick(){
 }
 
  function onSyncConfirm(button) {
-                if(button==2){//If User selected No, then we just do nothing
-                    return;
-                }else{
-                    var isOffline = 'onLine' in navigator && !navigator.onLine;
+        if(button==2){//If User selected No, then we just do nothing
+            return;
+        }else{
+            var isOffline = 'onLine' in navigator && !navigator.onLine;
 
-                    if ( isOffline ) {
-                         navigator.notification.alert(
-                             'Please connect to network / 请连接网络',  // message
-                             alertDismissed,         // callback
-                             'Alert',            // title
-                             'OK'                  // buttonName
-                         );
-                    }
-                    else {
+            if ( isOffline ) {
+                 navigator.notification.alert(
+                     'Please connect to network / 请连接网络',  // message
+                     alertDismissed,         // callback
+                     'Alert',            // title
+                     'OK'                  // buttonName
+                 );
+            }
+            else {
+                loading.startLoading();
+                document.addEventListener("deviceready", getActivityList, false);
                         
-                        loading.startLoading();
-                        getActivityList(); 
-
-                    }
-
-                    
-                    
-                      
-                    }
+            }
+              
+        }
 }
 
 function alertDismissed() {
